@@ -1,62 +1,42 @@
-def num_to_arr(n):
-    arr = []
-
-    while n > 0:
-        arr.append(n % 10)
-        n = int(n/10)
-
-    arr.reverse()
-
-    return arr if len(arr) != 0 else [0]
-
-
-def find_bigger(a, b):
-    len_a = len(a)
-    len_b = len(b)
-
-    index_a = 0
-    index_b = 0
-
-    while True:
-        if a[index_a] != b[index_b]:
-            return 1 if a[index_a] > b[index_b] else -1
-
-        if index_a == len_a - 1 and index_b == len_b - 1:
-            break
-
-        if index_a < len_a - 1:
-            index_a += 1
-
-        if index_b < len_b - 1:
-            index_b += 1
-
-    return 0 if len_a == len_b else (1 if len_a < len_b else -1)
-
-
 def solution(numbers):
-    answer = ''
+    print(numbers, end=" -> ")
+    str_nums = [str(n) for n in numbers]
+    max_len = max([len(n) for n in str_nums])
 
-    len_a = len(numbers)
+    new_nums = []
+    for s in str_nums:
+        len_s = len(s)
+        key = s + (max_len - len_s) * str(int(s[len_s-1]))
+        new_nums.append([key, -len_s, s])
 
-    for i in range(len_a):
+    # print(new_nums)
 
-        len_b = len_a - i
-        # print(len_b, ":", end="")
-        for j in range(i, len_a):
-            a = num_to_arr(numbers[i])
-            b = num_to_arr(numbers[j])
+    # nums = []
+    nums = sorted(new_nums, reverse=True, key=lambda x: (x[0], x[1]))
+    # print(nums)
 
-            if find_bigger(a, b) == -1:
-                temp = numbers[j]
-                numbers[j] = numbers[i]
-                numbers[i] = temp
+    answer = ""
+    for n in nums:
+        answer += n[2]
 
-            # print(numbers)
+    return str(int(answer))
 
-        # for n in numbers:
-        if len(answer) == 0 and numbers[i] == 0:
-            continue
 
-        answer += str(numbers[i])
-
-    return answer if len(answer) != 0 else '0'
+print(solution([6, 10, 2]))
+print(solution([3, 30, 34, 5, 9]))
+print(solution([3, 30, 32, 5, 9]))
+print(solution([7, 0, 0, 0]))
+print(solution([0, 0]))
+print(solution([40,403 ]))
+print(solution([40,405]))
+print(solution([40,404]))
+print(solution([12,121]))
+print(solution([2,22,223]))
+print(solution([21,212]))
+print(solution([41,415]))
+print(solution([2,22 ]))
+print(solution([70,0,0,0]))
+print(solution([0,0,0,0]))
+print(solution([0,0,0,1000]))
+print(solution([12,1213]))
+print(solution([21, 212, 211, 22]))
